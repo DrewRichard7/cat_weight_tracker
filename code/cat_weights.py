@@ -209,4 +209,5 @@ fig = px.line(
 
 fig.show()
 
-
+fig.write_image("../assets/both_cats_weigths.png")
+fig.write_html("../assets/both_cats_weights.html")
