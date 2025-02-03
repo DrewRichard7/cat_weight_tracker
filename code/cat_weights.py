@@ -210,8 +210,8 @@ fig = px.line(
 
 fig.show()
 
-#fig.write_image("../assets/both_cats_weigths.png")
-#fig.write_html("../assets/both_cats_weights.html")
+# fig.write_image("../assets/both_cats_weigths.png")
+# fig.write_html("../assets/both_cats_weights.html")
 
 # Create the Dash app
 app = Dash(__name__)
@@ -317,5 +317,5 @@ def update_age_output(selected_date):
     ])
 
 # Run the app
-# if __name__ == '__main__':
-#    app.run_server(debug=True, host='0.0.0.0', port=8050)
+if __name__ == '__main__':
+   app.run_server(debug=True, host='0.0.0.0', port=8050)
