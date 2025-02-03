@@ -9,6 +9,7 @@ import plotly.express as px
 import pandas as pd 
 import numpy as np
 from datetime import datetime as dt
+from dash import Dash, dcc, html, Input, Output
 
 # some colors I want to use
 yellow_color = '#FFD96E'
@@ -211,3 +212,110 @@ fig.show()
 
 fig.write_image("../assets/both_cats_weigths.png")
 fig.write_html("../assets/both_cats_weights.html")
+
+# Create the Dash app
+app = Dash(__name__)
+server = app.server  # Needed for production deployment
+
+# Create the app layout
+app.layout = html.Div([
+    html.H1('Cat Weight Tracker', 
+            style={'textAlign': 'center', 'color': blue_color}),
+    
+    # Tabs for different views
+    dcc.Tabs([
+        # Individual weight tracks
+        dcc.Tab(label='Individual Weights', children=[
+            dcc.Graph(
+                id='haruki-weight',
+                figure=px.line(Haruki,
+                    x='Date',
+                    y='Weight (lbs)',
+                    hover_data=["Date", "Weight (lbs)"],
+                    labels={'x':'Date Weighed', 'y':'Weight (lbs)'},
+                    title="Haruki's Weight Tracker",
+                    markers=True
+                )
+            ),
+            dcc.Graph(
+                id='sullivan-weight',
+                figure=px.line(Sullivan,
+                    x='Date',
+                    y='Weight (lbs)',
+                    hover_data=["Date", "Weight (lbs)"],
+                    labels={'x':'Date Weighed', 'y':'Weight (lbs)'},
+                    title="Sullivan's Weight Tracker",
+                    markers=True
+                ).add_vrect(
+                    x0='2024-12-18', x1='2024-12-27',
+                    annotation_text="Sullivan was sick",
+                    annotation_position="top left",
+                    annotation=dict(font_color=blue_color),
+                    fillcolor=yellow_color,
+                    opacity=0.35,
+                    line_width=0
+                )
+            )
+        ]),
+        # Combined age comparison
+        dcc.Tab(label='Age Comparison', children=[
+            dcc.Graph(
+                id='combined-weight',
+                figure=px.line(
+                    df, 
+                    x="Age in Weeks", 
+                    y="Weight (lbs)", 
+                    color="Cat", 
+                    title="Weight by Age Comparison",
+                    markers=True,
+                    labels={"Weight (lbs)": "Weight (lbs)", 
+                           "Age in Weeks": "Age in Weeks"}
+                )
+            )
+        ])
+    ]),
+    
+    # Age Calculator Section
+    html.Div([
+        html.H3('Age Calculator', 
+                style={'textAlign': 'center', 'color': blue_color}),
+        html.Div([
+            dcc.DatePickerSingle(
+                id='date-picker',
+                date=dt.now().date(),
+                display_format='YYYY-MM-DD'
+            ),
+        ], style={'textAlign': 'center'}),
+        html.Div(id='age-output', 
+                 style={'textAlign': 'center', 'margin': '20px'})
+    ])
+], style={'padding': '10px', 'maxWidth': '1000px', 'margin': 'auto'})
+
+# Callback for age calculator
+@app.callback(
+    Output('age-output', 'children'),
+    Input('date-picker', 'date')
+)
+def update_age_output(selected_date):
+    if selected_date is None:
+        return ''
+    
+    haruki = haruki_age(selected_date)
+    sullivan = sullivan_age(selected_date)
+    
+    return html.Div([
+        html.Div([
+            html.H4('Haruki'),
+            html.P(f"Age in weeks: {haruki['weeks']}"),
+            html.P(f"Age in months: {haruki['months']}")
+        ]),
+        html.Div([
+            html.H4('Sullivan'),
+            html.P(f"Age in weeks: {sullivan['weeks']}"),
+            html.P(f"Age in months: {sullivan['months']}")
+        ])
+    ])
+
+# Run the app
+if __name__ == '__main__':
+    app.run_server(debug=True, host='0.0.0.0', port=8050)
