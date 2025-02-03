@@ -1,6 +1,6 @@
 # .py file for cat weight calculator
 # Author: Andrew Richard
-# Date: 2025-02-01
+#fdsa Date: 2025-02-01
 # Version: 1.0
 # Description: This program plots the weight of my cats over time, and calculates their age based on their birthdates.
 
@@ -317,5 +317,5 @@ def update_age_output(selected_date):
     ])
 
 # Run the app
-if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=8050)
+# if __name__ == '__main__':
+#    app.run_server(debug=True, host='0.0.0.0', port=8050)
