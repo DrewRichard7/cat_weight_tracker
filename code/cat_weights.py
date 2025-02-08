@@ -32,27 +32,9 @@ haruki_dict = {
     '2025-01-20':5.75,
     '2025-01-24':5.8125,
     '2025-01-28':5.9375,
-    '2025-02-01':6.1875
+    '2025-02-01':6.1875,
+    '2025-02-08':6.5
     }
-date_haruki = pd.to_datetime(
-    list(
-        haruki_dict.keys()
-        )
-        )
-weight_haruki = list(haruki_dict.values())
-Haruki = pd.DataFrame({'Date':date_haruki, 'Weight (lbs)':weight_haruki})
-Haruki['Date']=Haruki['Date'].dt.date
-Haruki
-fig = px.line(Haruki,
-           x=date_haruki,
-           y=weight_haruki,
-           hover_data=["Date", "Weight (lbs)"],
-           labels={'x':'Date Weighed', 'y':'Weight (lbs)'},
-           title = "Haruki's Weight Tracker",
-           markers='o'
-)
-fig.show()
-
 # Sullivan Script
 sullivan_dict = {
     '2024-12-02':3.125,
@@ -68,25 +50,9 @@ sullivan_dict = {
     '2025-01-20':4.5625,
     '2025-01-24':4.75,
     '2025-01-28':4.9375,
-    '2025-02-01':5.25
+    '2025-02-01':5.25,
+    '2025-02-08':5.6875
     }
-date_sullivan = pd.to_datetime(list(sullivan_dict.keys()))
-weight_sullivan = list(sullivan_dict.values())
-Sullivan = pd.DataFrame({'Date':date_sullivan, 'Weight (lbs)':weight_sullivan})
-Sullivan['Date']=Sullivan['Date'].dt.date
-Sullivan
-fig = px.line(Sullivan,
-           x=date_sullivan,
-           y=weight_sullivan,
-           hover_data=["Date", "Weight (lbs)"],
-           labels={'x':'Date Weighed', 'y':'Weight (lbs)'},
-           title = "Sullivan's Weight Tracker",
-           markers='o'
-)
-fig.add_vrect(x0='2024-12-18', x1='2024-12-27', 
-              annotation_text="Sullivan was sick", annotation_position="top left",
-              annotation=dict(font_color=blue_color),fillcolor=yellow_color, opacity=0.35, line_width=0)
-fig.show()
 
 
 # Function to calculate age of Haruki
@@ -210,6 +176,6 @@ fig = px.line(
 
 fig.show()
 
-# fig.write_image("../assets/both_cats_weigths.png")
-# fig.write_html("../assets/both_cats_weights.html")
+fig.write_image("../assets/both_cats_weigths.png")
+fig.write_html("../assets/both_cats_weights.html")
 
