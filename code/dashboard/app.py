@@ -1,5 +1,6 @@
 import seaborn as sns
 from faicons import icon_svg
+import plotly.express as px
 
 # Import data from shared.py
 from shared import app_dir, df
