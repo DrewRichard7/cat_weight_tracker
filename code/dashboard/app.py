@@ -16,8 +16,8 @@ app_ui = ui.page_sidebar(
 # change "species" to better label, remmber to change in server
             "cat",
             "Choose cat",
-            ["Haruki", "Sullivan"],
-            selected=["Haruki", "Sullivan"],
+            ["haruki", "sullivan"],
+            selected=["haruki", "sullivan"],
         ),
         title="Cat selector controls",
     ),
@@ -65,20 +65,20 @@ def server(input, output, session):
 
     @render.text
     def sullivan_age():
-        return filtered_df().shape[0]
+        return "sullivan's age will go here" 
 
     @render.text
     def haruki_age():
-        return f"{filtered_df()['weight']} lbs"
+        return f" haruki's age will be here"
 
     @render.text
     def growth_rate():
-        return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
+        return "their growth rate will be here" 
 
     @render.plot
     def weight_plot():
-        return px.scatter(
-            data=filtered_df(),
+        return sns.scatterplot(
+            data = filtered_df(),
             x="date",
             y="weight",
             hue="cat",
