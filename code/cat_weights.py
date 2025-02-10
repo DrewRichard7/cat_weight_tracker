@@ -1,4 +1,4 @@
-# .py file for cat weight calculator
+#.py file for cat weight calculator
 # Author: Andrew Richard
 #fdsa Date: 2025-02-01
 # Version: 1.0

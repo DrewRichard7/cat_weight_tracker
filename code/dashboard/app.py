@@ -1,9 +1,8 @@
 import seaborn as sns
 from faicons import icon_svg
-import plotly.express as px
 
 # Import data from shared.py
-from shared import app_dir, df, weights
+from shared import app_dir, weights
 
 from shiny import App, reactive, render, ui
 
@@ -11,9 +10,7 @@ from shiny import App, reactive, render, ui
 app_ui = ui.page_sidebar(
 # toggle Sullivan, Haruki, or Both
     ui.sidebar(
-        # delete slider input
         ui.input_checkbox_group(
-# change "species" to better label, remmber to change in server
             "cat",
             "Choose cat",
             ["haruki", "sullivan"],
@@ -65,14 +62,17 @@ def server(input, output, session):
 
     @render.text
     def sullivan_age():
+        # TODO: add age calculator for sullivan
         return "sullivan's age will go here" 
 
     @render.text
     def haruki_age():
+        # TODO: add age calculator for Haruki
         return f" haruki's age will be here"
 
     @render.text
     def growth_rate():
+        # TODO: create growth rate function
         return "their growth rate will be here" 
 
     @render.plot
