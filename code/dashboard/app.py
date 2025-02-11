@@ -31,12 +31,12 @@ app_ui = ui.page_sidebar(
     ui.layout_column_wrap(
         ui.value_box(
             "Sullivan's current age",
-            ui.output_text("sullivan_age"),
+            ui.output_text("sullivan_age_widget"),
             showcase=icon_svg("cat"),
         ),
         ui.value_box(
             "Haruki's current age",
-            ui.output_text("haruki_age"),
+            ui.output_text("haruki_age_widget"),
             showcase=icon_svg("cat"),
         ),
         ui.value_box(
@@ -74,9 +74,7 @@ def server(input, output, session):
     @render.text
     def sullivan_age_widget():
         today_date_str = dt.today().strftime('%Y-%m-%d')
-        print(f"Today's date: {today_date_str}")  # Debug print
         age = sullivan_age(today_date_str)
-        print(f"Sullivan's age: {age}")  # Debug print
         if "error" in age:
             return age["error"]
         return f"Sullivan's age: {age['years']} years, {age['months']} months, {age['weeks']} weeks, {age['days']} days"
@@ -84,9 +82,7 @@ def server(input, output, session):
     @render.text
     def haruki_age_widget():
         today_date_str = dt.today().strftime('%Y-%m-%d')
-        print(f"Today's date: {today_date_str}")  # Debug print
         age = haruki_age(today_date_str)
-        print(f"Haruki's age: {age}")  # Debug print
         if "error" in age:
             return age["error"]
         return f"Haruki's age: {age['years']} years, {age['months']} months, {age['weeks']} weeks, {age['days']} days"
@@ -94,6 +90,7 @@ def server(input, output, session):
     @render.text
     def growth_rate():
         # TODO: create growth rate function
+        
         return "their growth rate will be here"
 
     @render.plot
