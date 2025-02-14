@@ -45,8 +45,13 @@ app_ui = ui.page_sidebar(
             showcase=icon_svg("cat"),
         ),
         ui.value_box(
-            "Average growth rate",
-            ui.output_text("growth_rate"),
+            "haruki's growth rate",
+            ui.output_text("haruki_growth_rate"),
+            showcase=icon_svg("percent"),
+        ),
+        ui.value_box(
+            "sullivan's growth rate",
+            ui.output_text("sullivan_growth_rate"),
             showcase=icon_svg("percent"),
         ),
         fill=False,
@@ -62,6 +67,7 @@ app_ui = ui.page_sidebar(
             ui.output_data_frame("summary_statistics"),
             full_screen=True,
         ),
+        col_widths=[9,3]
     ),
     ui.include_css(app_dir / "styles.css"),
     title="Cat weight dashboard",
@@ -93,10 +99,14 @@ def server(input, output, session):
         return f"Haruki's age: {age['years']} years, {age['months']} months, {age['weeks']} weeks, {age['days']} days"
 
     @render.text
-    def growth_rate():
-        # TODO: create growth rate function
-        
-        return "their growth rate will be here"
+    def haruki_growth_rate():
+        haruki_growth_rate = weights[weights['cat'] == 'haruki']['weight'].max() / weights[weights['cat'] == 'haruki']['weeks'].max()
+        return f"Haruki's growth rate:\n{round(haruki_growth_rate, 2)} lbs/wk"
+
+    @render.text
+    def sullivan_growth_rate():
+        sullivan_growth_rate = weights[weights['cat'] == 'sullivan']['weight'].max() / weights[weights['cat'] == 'sullivan']['weeks'].max()
+        return f"Sullivan's growth rate:\n{round(sullivan_growth_rate, 2)} lbs/wk"
 
     @render.plot
     def weight_plot():
