@@ -83,3 +83,28 @@ def sullivan_age(input_date: str) -> dict:
     print(f"Sullivan's age calculated: {age}")  # Debug print
     return age
 
+
+def age_in_weeks(df):
+    """ 
+    Desc: calculates the age of cats in weeks based on the date column
+
+    Args: 
+        df (pd.DataFrame): dataframe of cat data (cat, weight, date)
+    Returns:
+        pd.DataFrame: the dataframe with added "weeks" column representing the cat's age in weeks
+    """
+
+    from datetime import datetime as dt
+    import pandas as pd 
+
+    haruki_birthday = dt(2024, 8, 29)
+    sullivan_birthday = dt(2024, 10, 7)
+
+    df['date'] = pd.to_datetime(df['date']) # ensure date col is in dt form
+
+    if df['cat']  == 'haruki':
+        df['weeks'] = (df['date'] - haruki_birthday).dt.days / 7
+    elif df['cat'] == 'sullivan': 
+        df['weeks'] = (df['date'] - sullivan_birthday).dt.days / 7
+    return df
+

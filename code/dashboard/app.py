@@ -1,20 +1,19 @@
+# shiny app to display my cats' growth over time
+# v0.0.1 - Andrew Richard
+# project start: January 31, 2025
+# to run, make sure venv is active with necessary libraries
+# in terminal, run shiny run app.py when in directory 
+
+# import libraries and functions
 import seaborn as sns
 from faicons import icon_svg
 import pandas as pd
 from datetime import datetime as dt
-
-# import age functions from other file
-from funcs import haruki_age, sullivan_age
-
-# Verify that the functions are imported correctly
-print("Imported functions:")
-print(f"haruki_age: {haruki_age}")
-print(f"sullivan_age: {sullivan_age}")
-
-# Import data from shared.py
-from shared import app_dir, weights
-
+from funcs import haruki_age, sullivan_age, age_in_weeks
+from shared import app_dir, weights 
 from shiny import App, reactive, render, ui
+
+weights = age_in_weeks(weights)
 
 # Define UI elements of app
 app_ui = ui.page_sidebar(
@@ -25,6 +24,12 @@ app_ui = ui.page_sidebar(
             "Choose cat",
             ["haruki", "sullivan"],
             selected=["haruki", "sullivan"],
+        ),
+        ui.input_checkbox_group(
+            "plot_toggle",
+            "Toggle weight by age",
+            ["date", "weeks"],
+            selected=["date"],
         ),
         title="Cat selector controls",
     ),
@@ -98,7 +103,7 @@ def server(input, output, session):
         df = filtered_df()
         return sns.lineplot(
             data=df,
-            x="date",
+            x=input.plot_toggle(),
             y="weight",
             hue="cat",
         )
