@@ -25,11 +25,11 @@ app_ui = ui.page_sidebar(
             ["haruki", "sullivan"],
             selected=["haruki", "sullivan"],
         ),
-        ui.input_checkbox_group(
+        ui.input_radio_buttons(
             "plot_toggle",
             "Toggle weight by age",
-            ["date", "weeks"],
-            selected=["date"],
+            choices = ["date", "weeks"],
+            selected="date",
         ),
         title="Cat selector controls",
     ),
@@ -101,9 +101,10 @@ def server(input, output, session):
     @render.plot
     def weight_plot():
         df = filtered_df()
+        print(df)
         return sns.lineplot(
             data=df,
-            x=input.plot_toggle(),
+            x=df[str(input.plot_toggle())],
             y="weight",
             hue="cat",
         )

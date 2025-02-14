@@ -102,9 +102,8 @@ def age_in_weeks(df):
 
     df['date'] = pd.to_datetime(df['date']) # ensure date col is in dt form
 
-    if df['cat']  == 'haruki':
-        df['weeks'] = (df['date'] - haruki_birthday).dt.days / 7
-    elif df['cat'] == 'sullivan': 
-        df['weeks'] = (df['date'] - sullivan_birthday).dt.days / 7
+    df.loc[df['cat'] == 'haruki', 'weeks'] = pd.to_numeric((df['date'] - haruki_birthday).dt.days / 7)
+    df.loc[df['cat'] == 'sullivan', 'weeks'] = pd.to_numeric((df['date'] - sullivan_birthday).dt.days / 7)
+
     return df
 
