@@ -31,18 +31,16 @@ app_ui = ui.page_sidebar(
             choices = ["date", "weeks"],
             selected="date",
         ),
-        title="Cat selector controls",
-    ),
-    ui.layout_column_wrap(
         ui.value_box(
             "Sullivan's current age",
-            ui.output_text("sullivan_age_widget"),
+            ui.output_text("sullivan_age_widget", ui.tags.style("body { font-family: 'Roboto', sans-serif; }")),
             showcase=icon_svg("cat"),
         ),
         ui.value_box(
             "Haruki's current age",
             ui.output_text("haruki_age_widget"),
             showcase=icon_svg("cat"),
+            class_="small-text",
         ),
         ui.value_box(
             "haruki's growth rate",
@@ -51,9 +49,13 @@ app_ui = ui.page_sidebar(
         ),
         ui.value_box(
             "sullivan's growth rate",
-            ui.output_text("sullivan_growth_rate"),
+            ui.output_text("sullivan_growth_rate"), 
             showcase=icon_svg("percent"),
+            style="font-size: 11px;",
         ),
+        title="Cat selector controls",
+    ),
+    ui.layout_column_wrap(
         fill=False,
     ),
     ui.layout_columns(
