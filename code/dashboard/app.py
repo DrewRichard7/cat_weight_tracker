@@ -13,8 +13,16 @@ from datetime import datetime as dt
 from funcs import haruki_age, sullivan_age, age_in_weeks
 from shared import app_dir, weights 
 from shiny import App, reactive, render, ui
+#from htmltools import tags
 
 weights = age_in_weeks(weights)
+
+#    tags.head(
+#        tags.link(
+#            rel="icon", href="www.caticon.png"
+#        )
+#    ),
+
 
 # Define UI elements of app
 app_ui = ui.page_sidebar(
@@ -70,10 +78,12 @@ app_ui = ui.page_sidebar(
         ),
         col_widths=[9,3]
     ),
+    #TODO: add junk drawer with references - cat icon: <a target="_blank" href="https://icons8.com/icon/GEAs8ke5mB3W/cat">Cat</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>z
     ui.include_css(app_dir / "styles.css"),
     title="Cat weight dashboard",
     fillable=True,
-)
+)    
+
 
 
 def server(input, output, session):
