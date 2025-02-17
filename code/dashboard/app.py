@@ -6,6 +6,7 @@
 
 # import libraries and functions
 import seaborn as sns
+import matplotlib.pyplot as plt
 from faicons import icon_svg
 import pandas as pd
 from datetime import datetime as dt
@@ -33,25 +34,23 @@ app_ui = ui.page_sidebar(
         ),
         ui.value_box(
             "Sullivan's current age",
-            ui.output_text("sullivan_age_widget", ui.tags.style("body { font-family: 'Roboto', sans-serif; }")),
+                ui.tags.span(ui.output_text("sullivan_age_widget"), style="font-size: 11px"), 
             showcase=icon_svg("cat"),
         ),
         ui.value_box(
             "Haruki's current age",
-            ui.output_text("haruki_age_widget"),
+            ui.tags.span(ui.output_text("haruki_age_widget"), style="font-size: 11px"), 
             showcase=icon_svg("cat"),
-            class_="small-text",
         ),
         ui.value_box(
             "haruki's growth rate",
-            ui.output_text("haruki_growth_rate"),
+            ui.tags.span(ui.output_text("haruki_growth_rate"), style="font-size: 11px"), 
             showcase=icon_svg("percent"),
         ),
         ui.value_box(
             "sullivan's growth rate",
-            ui.output_text("sullivan_growth_rate"), 
+            ui.tags.span(ui.output_text("sullivan_growth_rate"), style="font-size: 11px"), 
             showcase=icon_svg("percent"),
-            style="font-size: 11px;",
         ),
         title="Cat selector controls",
     ),
@@ -80,7 +79,7 @@ app_ui = ui.page_sidebar(
 def server(input, output, session):
     @reactive.calc
     def filtered_df():
-        weights["date"] = pd.to_datetime(weights["date"])
+        weights["date"] = pd.to_datetime(weights["date"], format="%Y-%m-%d").dt.date
         filt_df = weights[weights["cat"].isin(input.cat())]
         return filt_df
 
@@ -114,13 +113,14 @@ def server(input, output, session):
     def weight_plot():
         df = filtered_df()
         print(df)
-        return sns.lineplot(
+        p = sns.lineplot(
             data=df,
             x=df[str(input.plot_toggle())],
             y="weight",
             hue="cat",
         )
-
+        plt.xticks(rotation=45)
+        return p 
     @render.data_frame
     def summary_statistics():
         cols = [
