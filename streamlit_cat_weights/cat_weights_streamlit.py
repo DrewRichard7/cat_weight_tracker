@@ -44,5 +44,10 @@ st.line_chart(weights, x='date', y='weight', color='cat', x_label="date", y_labe
 today_date_str = dt.today().strftime('%Y-%m-%d')
 sully_age = sullivan_age(today_date_str)
 ruki_age = haruki_age(today_date_str)
+
+# sullivan age 
 st.write(f"Sullivan's age: {sully_age['years']} years, {sully_age['months']} months, {sully_age['weeks']} weeks, {sully_age['days']} days")
+
+# haruki age 
 st.write(f"Haruki's age: {ruki_age['years']} years, {ruki_age['months']} months, {ruki_age['weeks']} weeks, {ruki_age['days']} days")
+
